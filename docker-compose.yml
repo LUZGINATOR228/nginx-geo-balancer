@@ -1,0 +1,16 @@
+services:
+  nginx-balancer:
+    build: .
+    image: mottex-balancer:latest
+    container_name: nginx-balancer
+    restart: always
+    ports:
+      - "8080:80"
+      - "8443:443"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /home/mottex/www/docker/conf/ssl/:/etc/nginx/ssl/:ro
+      - ./dbip-city-lite-2026-10.mmdb:/usr/share/GeoIP/GeoLite2-City.mmdb:ro
+
